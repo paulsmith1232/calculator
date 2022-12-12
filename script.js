@@ -1,5 +1,10 @@
 let storedValue = 0;
 let storedOperator = '';
+const buttons = document.querySelectorAll('button');
+buttons.forEach(button => button.addEventListener('click', (e) => getInput(e)));
+
+const display = document.querySelector('.viewport');
+let activeVal = "";
 
 function add(a,b){
   return a + b;
@@ -38,42 +43,24 @@ function operate(operator, a, b) {
 
 function getInput(e){
   const input = e.target.id.toString();
-  if(!isNaN(input)) {
-    updateActiveValue(input)
-    updateDisplay(input);
-  } else if (checkForOperator(input)){
-    storedOperator = input;
-    storeActiveValue();
-    updateActiveValue('')
-  } else if (input === '='){
-    let result = operate(storedOperator, storedValue, activeVal);
-    updateActiveValue(result);
-    updateDisplay(result);
-  }
-    
-    // number
-    // operator
-    // clear
-    // equals
-    // decimal
-  
+  processInput(input);
 }
-// need to detect if value is stored AND if operator is stored
 
 function updateDisplay(val) {
-  display.innerHTML = activeVal;  
+  display.innerHTML = val;  
 }
-
 
 function updateActiveValue(val) {
   if(val === '' || activeVal === '') activeVal = val;
-  // else if(activeVal === '') activeVal = val
-  else activeVal += val;
-   
+  else activeVal += val;   
 }
 
-function storeActiveValue(){
-  storedValue = activeVal;
+function updateStoredValue(val = activeVal){
+  storedValue = val;
+}
+
+function storeOperator(val){
+  storedOperator = val;
 }
 
 function checkForOperator(val) {
@@ -86,13 +73,47 @@ function checkForOperator(val) {
   else return false;
 }
 
-console.log(operate('+', 2, 3));
-console.log(operate('-', 4, 3));
-console.log(operate('*', 6, 3));
-console.log(operate('/', 6, 3));
+function evaluate(){
+  if(storedValue !== '' && activeVal !== ''){
+    const result = operate(storedOperator, Number(storedValue), Number(activeVal));
+    console.log(`Result:      ${result}`);
+    updateDisplay(result);
+    updateActiveValue('');
+    updateStoredValue(result);
+  }
+}
 
-const buttons = document.querySelectorAll('button');
-buttons.forEach(button => button.addEventListener('click', (e) => getInput(e)));
+function processOperator(operator) {
+  if(storedOperator === '' && storedValue != ''){
+    storeOperator(operator);     
+  } else if (storedOperator === ''){
+    storeOperator(operator);
+    updateStoredValue(activeVal);
+    updateActiveValue('');
+  } else {
+    evaluate();
+    storeOperator(operator)
+  }
+}
 
-const display = document.querySelector('.viewport');
-let activeVal = "";
+function processInput(input) {
+  if(!isNaN(input)) {                   // checks for number  
+    updateActiveValue(input);
+    updateDisplay(activeVal);
+  } else if (checkForOperator(input)){  // checks for operator
+    processOperator(input);
+  } else if (input === '='){            // checks for equals sign
+    evaluate();
+    storeOperator('')
+  } else if (input === 'C'){
+    clearCalculator();
+  }
+  console.log(`Active Value: ${activeVal}`);
+  console.log(`Stored Value: ${storedValue}`);  
+}
+
+function clearCalculator(){
+  updateActiveValue('');
+  updateStoredValue('');
+  updateDisplay(0);
+}
