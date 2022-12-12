@@ -115,5 +115,6 @@ function processInput(input) {
 function clearCalculator(){
   updateActiveValue('');
   updateStoredValue('');
+  storeOperator('');
   updateDisplay(0);
 }
