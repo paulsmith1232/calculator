@@ -1,42 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF8">
-    <script src="./script.js" defer></script>
-    <title>Calculator</title>
-  </head>
-  <body>
-    <h1>Welcome to Calculator!</h1>
-    <div class="calculator-container">
-      <div class="viewport">
-        1234567890
+
+<head>
+  <meta charset="UTF8">
+  <script src="./script.js" defer></script>
+  <link rel="stylesheet" href="./style.css">
+  <title>Calculator</title>
+</head>
+
+<body>
+  <h1>Welcome to Calculator!</h1>
+  <div class="calculator-container">
+    <div class="viewport">0</div>
+    <div class="buttons-container">
+      <div class="row">
+      
+          <button class="clear" id="C">C</button>
+
+          <button class="operator" id="/">/</button>
+
       </div>
-      <div class="buttons">
-        <div class="row">
-          <button id="1">1</button>
-          <button id="2">2</button>
-          <button id="3">3</button>
-          <button id="C">C</button>
-        </div>
-        <div class="row">
-          <button id="4">4</button>
-          <button id="5">5</button>
-          <button id="6">6</button>
-          <button id="-">-</button>
-        </div>
-        <div class="row">
-          <button id="7">7</button>
-          <button id="8">8</button>
-          <button id="9">9</button>
-          <button id="+">+</button>
-        </div>
-        <div class="row">
-          <button id="0">0</button>
-          <button id="/">/</button>
-          <button id="*">X</button>
-          <button id="=">=</button>
-        </div>
+      <div class="row">
+          <button class="operand" id="7">7</button>
+
+          <button class="operand" id="8">8</button>
+
+          <button class="operand" id="9">9</button>
+
+          <button class="operator" id="*">*</button>
+
+      </div>
+      <div class="row">
+          <button class="operand" id="4">4</button>
+
+          <button class="operand" id="5">5</button>
+
+          <button class="operand" id="6">6</button>
+
+          <button class="operator" id="-">-</button>
+
+      </div>
+      <div class="row">
+          <button class="operand" id="1">1</button>
+
+          <button class="operand" id="2">2</button>
+
+          <button class="operand" id="3">3</button>
+
+          <button class="operator" id="+">+</button>
+
+      </div>
+      <div class="row">
+          <button class="zero operand" id="0">0</button>
+
+          <button class="operand" id=".">.</button>
+
+          <button class="operator" id="=">=</button>
+
       </div>
     </div>
-  </body>
+  </div>
+</body>
+
 </html>

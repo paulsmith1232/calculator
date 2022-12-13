@@ -1,10 +1,10 @@
-let storedValue = 0;
+let storedValue = '';
 let storedOperator = '';
 const buttons = document.querySelectorAll('button');
 buttons.forEach(button => button.addEventListener('click', (e) => getInput(e)));
 
 const display = document.querySelector('.viewport');
-let activeVal = "";
+let activeVal = '';
 
 function add(a,b){
   return a + b;
@@ -50,9 +50,10 @@ function updateDisplay(val) {
   display.innerHTML = val;  
 }
 
+
 function updateActiveValue(val) {
   if(val === '' || activeVal === '') activeVal = val;
-  else activeVal += val;   
+  else if (activeVal.length < 9) activeVal += val;   
 }
 
 function updateStoredValue(val = activeVal){
@@ -75,11 +76,19 @@ function checkForOperator(val) {
 
 function evaluate(){
   if(storedValue !== '' && activeVal !== ''){
-    const result = operate(storedOperator, Number(storedValue), Number(activeVal));
+    let result = operate(storedOperator, Number(storedValue), Number(activeVal));
+    if(result % 1 !== 0){
+      result = parseFloat(result.toFixed(8-result.toString().indexOf('.')));
+    }
     console.log(`Result:      ${result}`);
+    if (result !== Infinity){
+      updateActiveValue('');
+      updateStoredValue(result);      
+    } else {
+      clearCalculator();
+      result = "Nice try";
+    }
     updateDisplay(result);
-    updateActiveValue('');
-    updateStoredValue(result);
   }
 }
 
@@ -97,7 +106,8 @@ function processOperator(operator) {
 }
 
 function processInput(input) {
-  if(!isNaN(input)) {                   // checks for number  
+  if(!isNaN(input) || input === '.') {                   // checks for number  
+    if(activeVal === '' && storedOperator === '' && storedValue !== '') updateStoredValue('');
     updateActiveValue(input);
     updateDisplay(activeVal);
   } else if (checkForOperator(input)){  // checks for operator
