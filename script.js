@@ -53,7 +53,12 @@ function updateDisplay(val) {
 
 function updateActiveValue(val) {
   if(val === '' || activeVal === '') activeVal = val;
-  else if (activeVal.length < 9) activeVal += val;   
+  else if (activeVal.length < 9 && val !== '.') {
+    activeVal += val;   
+  } else if (val === '.' && activeVal.indexOf('.') === -1){
+    activeVal += val;
+  }
+  console.log(activeVal.indexOf('.'));
 }
 
 function updateStoredValue(val = activeVal){
